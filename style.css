@@ -71,32 +71,25 @@ body{
 .stage{
   position:relative;
   flex:1;
-  padding: 0 10px calc(6px + var(--safeBottom));
+  padding: 0 10px 0;
   display:flex;
   flex-direction:column;
-  height: calc(100vh - 80px);
+  height: calc(100dvh - 72px);
 }
 
+
 #game{
+  flex: 1;
   width:100%;
-  height:100%;
+  height: 100%;
+  min-height: 0;
   border-radius: var(--radius);
   background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
   border: 1px solid rgba(255,255,255,.08);
   box-shadow: var(--shadow);
 }
 
-.hudBars{
-  position:absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 90px;
-  width: min(520px, 92%);
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  pointer-events:none;
-}
+
 
 .barRow{
   display:grid;
@@ -134,7 +127,12 @@ body{
 .barValue{ font-weight:800; font-size: 12px; text-align:right; color: rgba(232,236,255,.9); }
 
 .bottombar{
-  margin-top: 10px;
+  position:absolute;
+  left: 12px;
+  right: 12px;
+  bottom: calc(10px + var(--safeBottom));
+  margin-top: 0;
+
   display:flex;
   gap:10px;
   align-items:center;
@@ -146,6 +144,7 @@ body{
   backdrop-filter: blur(10px);
   box-shadow: 0 10px 30px rgba(0,0,0,.25);
 }
+
 .mini{ display:flex; align-items:center; gap:8px; color: rgba(232,236,255,.82); font-size: 12px; }
 .miniK{ color: rgba(154,167,255,.9); letter-spacing: .8px; }
 .miniV{ font-weight:800; }
@@ -222,14 +221,16 @@ body{
 
 .mobileControls{
   position:absolute;
-  left: 0;
-  right: 0;
-  bottom: calc(90px + var(--safeBottom));
-  display:flex;
-  justify-content:space-around;
+  left: 12px;
+  right: 12px;
+  bottom: calc(74px + var(--safeBottom)); /* sits above bottom bar */
+  display:none;
   align-items:flex-end;
-  padding: 0 16px;
+  justify-content:space-between;
+  gap:12px;
+  pointer-events:auto;
 }
+
 
 .cluster{ display:flex; gap:10px; }
 .cluster.left, .cluster.mid, .cluster.right{ align-items:flex-end; }
@@ -257,12 +258,7 @@ body{
 
 @media (max-width: 768px){
 
-  .hudBars{
-    top: 70px;
-    left: 12px;
-    width: calc(100% - 24px);
-    gap:6px;
-  }
+
 .barRow{
   padding: 6px 10px;
   font-size:12px;
@@ -294,9 +290,7 @@ body{
   .mobileControls{ display:flex; }
 }
 
-@media (max-height: 640px){
-  .hudBars{ display:none; }
-}
+
 .logoImg{
   width:68px;
   height:68px;
@@ -315,9 +309,19 @@ body{
 }
 @media (max-width: 480px){
 
-  .topbar{
-    padding: 10px 10px 6px;
-  }
+ .topbar{
+  padding: calc(12px + var(--safeTop)) 14px 10px;
+  display:grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "brand pills"
+    "bars  bars";
+  gap:10px 14px;
+  align-items:center;
+  background: linear-gradient(180deg, rgba(0,0,0,.62), rgba(0,0,0,0));
+}
+.brand{ grid-area: brand; }
+.hudTop{ grid-area: pills; justify-self:end; }
 
   .pill{
     padding:6px 8px;
@@ -332,18 +336,106 @@ body{
 }
 @media (max-width: 768px){
 
-  .hudBars{
-    top: 110px;
-    width: 94%;
-    gap:8px;
-  }
 
-  .barRow{
-    padding: 6px 12px;
-  }
+
+
+ .barRow{
+  display:grid;
+  grid-template-columns: 54px 1fr 40px;
+  gap:10px;
+  align-items:center;
+  background: rgba(12,16,34,.45);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 14px;
+  padding: 8px 10px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 26px rgba(0,0,0,.20);
+}
+
 
   .barTrack{
     height:6px;
   }
 
+}
+
+@media (max-width: 768px){
+  .topbar{
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "brand"
+      "bars"
+      "pills";
+  }
+
+  .hudTop{
+    justify-self:start;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+
+
+  .barRow{
+    padding: 7px 10px;
+  }
+
+  .barTrack{
+    height:6px;
+  }
+}
+.topbar{
+  padding: calc(12px + var(--safeTop)) 14px 12px;
+  display:grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas: "brand bars pills";
+  align-items:center;
+  gap: 14px;
+  background: linear-gradient(180deg, rgba(0,0,0,.62), rgba(0,0,0,0));
+}
+
+.brand{ grid-area: brand; display:flex; align-items:center; gap:12px; min-width: 240px; }
+
+.hudBars{
+  grid-area: bars;
+  display:grid;
+  grid-template-columns: repeat(3, minmax(140px, 1fr));
+  gap:10px;
+  width: 100%;
+  max-width: 720px;
+  justify-self:center;
+}
+
+.hudTop{
+  grid-area: pills;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:flex-end;
+  flex-wrap:nowrap;
+}
+
+.pill{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:4px;
+  min-width: 86px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: rgba(12,16,34,.55);
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  backdrop-filter: blur(10px);
+}
+
+.pill .k{
+  font-size:10px;
+  letter-spacing:1px;
+  color: rgba(154,167,255,.85);
+}
+
+.pill .v{
+  font-size:14px;
+  font-weight:900;
+  line-height:1;
 }
