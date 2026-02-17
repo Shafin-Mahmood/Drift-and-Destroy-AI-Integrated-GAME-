@@ -293,7 +293,7 @@
     cam.shake = 0;
 
     clearLossOverlay();
-    ui.statusText.textContent = "Hunt started (easy ramp)";
+    ui.statusText.textContent = "Hunt started";
   }
 
   function openHow(open) {
