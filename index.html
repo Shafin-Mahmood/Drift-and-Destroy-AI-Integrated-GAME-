@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Drift & Destroy</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <div class="brand">
+        <img class="logoImg" src="logo.png" alt="Logo">
+ <div class="titleBlock">
+          <div class="title">Drift & Destroy</div>
+          <div class="subtitle">Neon Highway Combat</div>
+        </div>
+      </div>
+
+      <div class="hudTop">
+        <div class="pill">
+          <span class="k">SCORE</span>
+          <span class="v" id="score">0</span>
+        </div>
+        <div class="pill">
+          <span class="k">WAVE</span>
+          <span class="v" id="wave">1</span>
+        </div>
+        <div class="pill">
+          <span class="k">FPS</span>
+          <span class="v" id="fps">—</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="stage">
+      <canvas id="game" aria-label="Drift and Destroy game canvas"></canvas>
+
+      <div class="hudBars">
+        <div class="barRow">
+          <div class="barLabel">HP</div>
+          <div class="barTrack"><div class="barFill hp" id="hpFill"></div></div>
+          <div class="barValue" id="hpText">100</div>
+        </div>
+        <div class="barRow">
+          <div class="barLabel">ARMOR</div>
+          <div class="barTrack"><div class="barFill armor" id="armorFill"></div></div>
+          <div class="barValue" id="armorText">60</div>
+        </div>
+        <div class="barRow">
+          <div class="barLabel">NITRO</div>
+          <div class="barTrack"><div class="barFill nitro" id="nitroFill"></div></div>
+          <div class="barValue" id="nitroText">100</div>
+        </div>
+      </div>
+
+      <div class="hint" id="hint">
+        <div class="hintBox">
+          <div class="hintTitle">Controls</div>
+          <div class="hintGrid">
+            <div class="hintItem"><span class="chip">W / ↑</span> Accelerate</div>
+            <div class="hintItem"><span class="chip">S / ↓</span> Brake</div>
+            <div class="hintItem"><span class="chip">A/D</span> Steer</div>
+            <div class="hintItem"><span class="chip">Space</span> Shoot</div>
+            <div class="hintItem"><span class="chip">Shift</span> Nitro</div>
+            <div class="hintItem"><span class="chip">M</span> Mute</div>
+            <div class="hintItem"><span class="chip">Tap UI</span> Mobile controls</div>
+          </div>
+          <div class="hintFooter">
+            <button class="btn" id="startBtn">Start</button>
+            <button class="btn ghost" id="howBtn">Hide</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="overlay" id="overlay">
+        <div class="panel">
+          <div class="panelTitle" id="panelTitle">Paused</div>
+          <div class="panelSub" id="panelSub">Press Resume</div>
+          <div class="panelBtns">
+            <button class="btn" id="resumeBtn">Resume</button>
+            <button class="btn ghost" id="restartBtn">Restart</button>
+          </div>
+          <div class="panelNote" id="panelNote">Tip: Drift by steering fast at high speed.</div>
+        </div>
+      </div>
+
+      <div class="mobileControls" id="mobileControls">
+        <div class="cluster left">
+          <button class="pad" data-act="left">◀</button>
+          <button class="pad" data-act="right">▶</button>
+        </div>
+        <div class="cluster mid">
+          <button class="pad" data-act="brake">BRAKE</button>
+          <button class="pad" data-act="gas">GAS</button>
+        </div>
+        <div class="cluster right">
+          <button class="pad fire" data-act="fire">FIRE</button>
+          <button class="pad nitro" data-act="nitro">NITRO</button>
+        </div>
+      </div>
+
+      <footer class="bottombar">
+        <div class="mini">
+          <span class="dot" id="soundDot"></span>
+          <span id="soundLabel">Sound: ON</span>
+        </div>
+        <div class="mini">
+          <span class="miniK">Best</span>
+          <span class="miniV" id="best">0</span>
+        </div>
+        <div class="mini">
+          <span class="miniK">Mode</span>
+          <span class="miniV" id="mode">Arcade</span>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script src="aiEngine.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
