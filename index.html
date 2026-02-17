@@ -10,7 +10,8 @@
   <div id="app">
     <header class="topbar">
       <div class="brand">
-        <div class="logo"></div>
+        <img src="logo.png" class="logoImg" />
+
         <div class="brandText">
           <div class="title">NEURAL HUNT</div>
           <div class="sub">Predator AI Survival • Dark Ops Arena</div>
@@ -64,7 +65,7 @@
         </div>
 
         <div class="hint" id="hint">
-          <span class="k">PC:</span> WASD/Arrow to move • Mouse to aim • Click to shoot • Shift to sprint • R reload
+          <span class="k">PC:</span> WASD/Arrow to move • Mouse to aim • Click to shoot • Shift sprint • R reload
           <span class="sep">|</span>
           <span class="k">Mobile:</span> Left joystick move • Right pad aim • Shoot/Reload buttons
         </div>
@@ -118,6 +119,20 @@
           </div>
           <button id="btnStart" class="btn primary big">START</button>
           <div class="panelHint">Tap START to enable audio on mobile</div>
+        </div>
+      </div>
+
+      <div class="overlay" id="lossOverlay" style="display:none">
+        <div class="panel">
+          <div class="panelGlow"></div>
+          <div class="panelTitle" style="letter-spacing:.12em">YOU WERE HUNTED</div>
+          <div class="panelSub" id="lossSub">Restarting in 4…</div>
+          <div class="panelStats">
+            <div class="chip">Tip: Don’t repeat paths</div>
+            <div class="chip">Sprint to reposition</div>
+            <div class="chip">Reload when safe</div>
+          </div>
+          <button id="btnRestartNow" class="btn primary big">RESTART NOW</button>
         </div>
       </div>
 

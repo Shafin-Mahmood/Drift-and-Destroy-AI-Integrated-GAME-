@@ -379,3 +379,10 @@ body{
   .btnStack .btn{width:120px}
   .stickWrap,.aimWrap{width:135px; height:135px}
 }
+.logoImg{
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  border-radius: 14px;
+  box-shadow: 0 12px 35px rgba(124,58,237,.25);
+}
