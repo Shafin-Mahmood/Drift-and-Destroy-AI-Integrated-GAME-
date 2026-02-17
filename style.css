@@ -13,7 +13,7 @@
   --bad:#ff3b5c;
 
   --radius:18px;
-  --shadow: 0 20px 60px rgba(0,0,0,.55);
+  --shadow: 0 20px 60px rgba(0,0,0,.55);  
   --safeTop: env(safe-area-inset-top);
   --safeBottom: env(safe-area-inset-bottom);
 }
@@ -88,14 +88,16 @@ body{
 
 .hudBars{
   position:absolute;
-  left: 22px;
-  top: 84px;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 90px;
+  width: min(520px, 92%);
   display:flex;
   flex-direction:column;
   gap:10px;
-  width: min(340px, calc(100% - 44px));
   pointer-events:none;
 }
+
 .barRow{
   display:grid;
   grid-template-columns: 60px 1fr 46px;
@@ -220,15 +222,15 @@ body{
 
 .mobileControls{
   position:absolute;
-  left: 12px;
-  right: 12px;
-  bottom: calc(66px + var(--safeBottom));
-  display:none;
+  left: 0;
+  right: 0;
+  bottom: calc(90px + var(--safeBottom));
+  display:flex;
+  justify-content:space-around;
   align-items:flex-end;
-  justify-content:space-between;
-  gap:12px;
-  pointer-events:auto;
+  padding: 0 16px;
 }
+
 .cluster{ display:flex; gap:10px; }
 .cluster.left, .cluster.mid, .cluster.right{ align-items:flex-end; }
 .pad{
@@ -261,11 +263,11 @@ body{
     width: calc(100% - 24px);
     gap:6px;
   }
+.barRow{
+  padding: 6px 10px;
+  font-size:12px;
+}
 
-  .barRow{
-    padding: 6px 10px;
-    font-size: 11px;
-  }
 
   .barTrack{
     height:6px;
@@ -325,6 +327,23 @@ body{
   .bottombar{
     padding:8px 10px;
     font-size:11px;
+  }
+
+}
+@media (max-width: 768px){
+
+  .hudBars{
+    top: 110px;
+    width: 94%;
+    gap:8px;
+  }
+
+  .barRow{
+    padding: 6px 12px;
+  }
+
+  .barTrack{
+    height:6px;
   }
 
 }
