@@ -1,123 +1,133 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
-
-  <title>Drift & Destroy</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>Neural Hunt: Predator AI</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div id="app">
     <header class="topbar">
       <div class="brand">
-        <img class="logoImg" src="logo.png" alt="Logo">
- <div class="titleBlock">
-          <div class="title">Drift & Destroy</div>
-          <div class="subtitle">Neon Highway Combat</div>
+        <div class="logo"></div>
+        <div class="brandText">
+          <div class="title">NEURAL HUNT</div>
+          <div class="sub">Predator AI Survival • Dark Ops Arena</div>
         </div>
       </div>
 
-      <div class="hudTop">
-        <div class="pill">
-          <span class="k">SCORE</span>
-          <span class="v" id="score">0</span>
-        </div>
-
-      
-      <div class="hudBars">
-        <div class="barRow">
-          <div class="barLabel">HP</div>
-          <div class="barTrack"><div class="barFill hp" id="hpFill"></div></div>
-          <div class="barValue" id="hpText">100</div>
-        </div>
-        <div class="barRow">
-          <div class="barLabel">ARMOR</div>
-          <div class="barTrack"><div class="barFill armor" id="armorFill"></div></div>
-          <div class="barValue" id="armorText">60</div>
-        </div>
-        <div class="barRow">
-          <div class="barLabel">NITRO</div>
-          <div class="barTrack"><div class="barFill nitro" id="nitroFill"></div></div>
-          <div class="barValue" id="nitroText">100</div>
-        </div>
-      </div>
-
-
-
-        <div class="pill">
-          <span class="k">WAVE</span>
-          <span class="v" id="wave">1</span>
-        </div>
-        <div class="pill">
-          <span class="k">FPS</span>
-          <span class="v" id="fps">—</span>
-        </div>
+      <div class="topActions">
+        <button id="btnMute" class="btn ghost" aria-label="Toggle sound">Sound: ON</button>
+        <button id="btnHow" class="btn ghost" aria-label="How to play">How</button>
+        <button id="btnRestart" class="btn primary" aria-label="Restart">Restart</button>
       </div>
     </header>
 
     <main class="stage">
-      <canvas id="game" aria-label="Drift and Destroy game canvas"></canvas>
+      <canvas id="game" width="1280" height="720"></canvas>
 
-      <div class="hint" id="hint">
-        <div class="hintBox">
-          <div class="hintTitle">Controls</div>
-          <div class="hintGrid">
-            <div class="hintItem"><span class="chip">W / ↑</span> Accelerate</div>
-            <div class="hintItem"><span class="chip">S / ↓</span> Brake</div>
-            <div class="hintItem"><span class="chip">A/D</span> Steer</div>
-            <div class="hintItem"><span class="chip">Space</span> Shoot</div>
-            <div class="hintItem"><span class="chip">Shift</span> Nitro</div>
-            <div class="hintItem"><span class="chip">M</span> Mute</div>
-            <div class="hintItem"><span class="chip">Tap UI</span> Mobile controls</div>
+      <div class="hud">
+        <div class="hudRow">
+          <div class="stat">
+            <div class="statLabel">HP</div>
+            <div class="bar"><div id="hpFill" class="fill hp"></div></div>
+            <div id="hpText" class="statText">100</div>
           </div>
-          <div class="hintFooter">
-            <button class="btn" id="startBtn">Start</button>
-            <button class="btn ghost" id="howBtn">Hide</button>
+
+          <div class="stat">
+            <div class="statLabel">STAM</div>
+            <div class="bar"><div id="stFill" class="fill st"></div></div>
+            <div id="stText" class="statText">100</div>
+          </div>
+
+          <div class="stat">
+            <div class="statLabel">AMMO</div>
+            <div class="bar thin"><div id="ammoFill" class="fill ammo"></div></div>
+            <div id="ammoText" class="statText">30</div>
+          </div>
+
+          <div class="pill">
+            <span class="pillKey">WAVE</span>
+            <span id="waveText" class="pillVal">1</span>
+          </div>
+
+          <div class="pill">
+            <span class="pillKey">SCORE</span>
+            <span id="scoreText" class="pillVal">0</span>
+          </div>
+
+          <div class="pill">
+            <span class="pillKey">AI</span>
+            <span id="aiText" class="pillVal">SEARCH</span>
           </div>
         </div>
-      </div>
 
-      <div class="overlay" id="overlay">
-        <div class="panel">
-          <div class="panelTitle" id="panelTitle">Paused</div>
-          <div class="panelSub" id="panelSub">Press Resume</div>
-          <div class="panelBtns">
-            <button class="btn" id="resumeBtn">Resume</button>
-            <button class="btn ghost" id="restartBtn">Restart</button>
-          </div>
-          <div class="panelNote" id="panelNote">Tip: Drift by steering fast at high speed.</div>
+        <div class="hint" id="hint">
+          <span class="k">PC:</span> WASD/Arrow to move • Mouse to aim • Click to shoot • Shift to sprint • R reload
+          <span class="sep">|</span>
+          <span class="k">Mobile:</span> Left joystick move • Right pad aim • Shoot/Reload buttons
         </div>
       </div>
 
       <div class="mobileControls" id="mobileControls">
-        <div class="cluster left">
-          <button class="pad" data-act="left">◀</button>
-          <button class="pad" data-act="right">▶</button>
+        <div class="stickWrap" id="leftStick">
+          <div class="stickBase"></div>
+          <div class="stickKnob" id="leftKnob"></div>
+          <div class="stickLabel">MOVE</div>
         </div>
-        <div class="cluster mid">
-          <button class="pad" data-act="brake">BRAKE</button>
-          <button class="pad" data-act="gas">GAS</button>
+
+        <div class="aimWrap" id="rightAim">
+          <div class="aimBase"></div>
+          <div class="aimKnob" id="rightKnob"></div>
+          <div class="stickLabel">AIM</div>
         </div>
-        <div class="cluster right">
-          <button class="pad fire" data-act="fire">FIRE</button>
-          <button class="pad nitro" data-act="nitro">NITRO</button>
+
+        <div class="btnStack">
+          <button class="btn act" id="btnShoot">SHOOT</button>
+          <button class="btn ghost act" id="btnReload">RELOAD</button>
+          <button class="btn ghost act" id="btnSprint">SPRINT</button>
+        </div>
+      </div>
+
+      <div class="modal" id="modal" aria-hidden="true">
+        <div class="modalCard">
+          <div class="modalTitle">How to play</div>
+          <div class="modalText">
+            You’re being hunted by a predator that <b>learns your movement</b>.
+            Survive waves, manage stamina, and keep moving—if you repeat paths, the AI will predict you.
+            <br><br>
+            <b>Tips:</b> burst fire for accuracy, sprint to reposition, reload when safe, and don’t camp.
+          </div>
+          <div class="modalActions">
+            <button class="btn primary" id="btnClose">Got it</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="overlay" id="startOverlay">
+        <div class="panel">
+          <div class="panelGlow"></div>
+          <div class="panelTitle">NEURAL HUNT</div>
+          <div class="panelSub">Predator AI adapts to your patterns</div>
+          <div class="panelStats">
+            <div class="chip">Dark Realistic Vibes</div>
+            <div class="chip">WebAudio Sound</div>
+            <div class="chip">Mobile Controls</div>
+            <div class="chip">Adaptive AI</div>
+          </div>
+          <button id="btnStart" class="btn primary big">START</button>
+          <div class="panelHint">Tap START to enable audio on mobile</div>
         </div>
       </div>
 
       <footer class="bottombar">
-        <div class="mini">
-          <span class="dot" id="soundDot"></span>
-          <span id="soundLabel">Sound: ON</span>
+        <div class="footLeft">
+          <span class="dot live"></span>
+          <span id="statusText">Ready</span>
         </div>
-        <div class="mini">
-          <span class="miniK">Best</span>
-          <span class="miniV" id="best">0</span>
-        </div>
-        <div class="mini">
-          <span class="miniK">Mode</span>
-          <span class="miniV" id="mode">Arcade</span>
+        <div class="footRight">
+          <span class="mini">Host-ready • Single-page • No external assets</span>
         </div>
       </footer>
     </main>
